@@ -9,6 +9,8 @@ import yaml
 from flask import Flask, Response
 from prometheus_client import Gauge, Counter, Summary, Histogram
 from prometheus_client import generate_latest, CollectorRegistry
+from prometheus_client.utils import INF
+
 
 
 if "PDG_LOG_LEVEL" in environ:
@@ -92,11 +94,18 @@ class PrometheusDataGenerator:
                     registry=self.registry
                 )
             elif metric["type"].lower() == "histogram":
-                # TODO add support to overwrite buckets
+                try:
+                    buckets = metric["buckets"]
+                except KeyError:
+                    buckets = [.005, .01, .025, .05, .075, .1, .25, .5, .75, 1.0, 2.5, 5.0, 7.5, 10.0]
+
+                buckets.append(INF)
+
                 instrument = Histogram(
                     metric["name"],
                     metric["description"],
                     labels,
+                    buckets=buckets,
                     registry=self.registry
                 )
             else:
