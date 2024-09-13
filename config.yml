@@ -37,3 +37,15 @@ config:
         labels:
           name: apple
           color: yellow
+
+  - name: some_histogram
+    description: some description
+    type: histogram
+    labels: [name]
+    buckets: [1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60]
+    sequence:
+      - interval: 1
+        eval_time: 1
+        values: 1-5
+        labels:
+          name: apple
