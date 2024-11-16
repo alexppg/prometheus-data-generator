@@ -115,7 +115,7 @@ curl localhost:9000/metrics/
 
 ``` bash
 wget https://raw.githubusercontent.com/little-angry-clouds/prometheus-data-generator/master/config.yml
-docker run -ti -v `pwd`/config.yml:/config.yml -p 127.0.0.1:9000:9000 \
+docker run -ti -v `pwd`/config.yml:/home/appuser/config.yml -p 127.0.0.1:9000:9000 \
     littleangryclouds/prometheus-data-generator
 curl localhost:9000/metrics/
 ```
